@@ -1,11 +1,11 @@
-Dictation Easy (dictation-ez)
+# Dictation Easy (dictation-ez)
 ### Dictation Easy. This app helps students do dictation on their own. 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](/doc/LICENSE) 
 
 ## Introduction
 This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content.
 
-## Appendix: *Get started with Create React App
+## Appendix: Get started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -75,6 +75,15 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+## Appendix: Onesen UI
+[Onsen UI](https://onsen.io/)
+
+### Install with NPM
+```Bash
+npm install onsenui --save
+npm install onsenui react-onsenui --save
+```
 
 ## Authors
 - Teki Chan *tekichan@gmail.com*
