@@ -1,3 +1,47 @@
+export function getBase64(file, _cbProcessImage, _cbProcessError) {
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = function () {
+        var srcOrientation = getOrientation(reader.result);
+        var base64 = 'data:image/jpg;base64,' + base64ArrayBuffer(reader.result);
+        var img = new Image();
+        img.setAttribute("src", base64);
+        img.onload = function() {
+            var width = 800;
+            var height = Math.floor(img.height * (width / img.width));
+            var canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            var ctx = canvas.getContext("2d");
+
+            // set proper canvas dimensions before transform & export
+            if ([5,6,7,8].indexOf(srcOrientation) > -1) {
+                canvas.width = height;
+                canvas.height = width;
+            } else {
+                canvas.width = width;
+                canvas.height = height;
+            }
+
+            // transform context before drawing image
+            switch (srcOrientation) {
+                case 2: ctx.transform(-1, 0, 0, 1, width, 0); break;
+                case 3: ctx.transform(-1, 0, 0, -1, width, height ); break;
+                case 4: ctx.transform(1, 0, 0, -1, 0, height ); break;
+                case 5: ctx.transform(0, 1, 1, 0, 0, 0); break;
+                case 6: ctx.transform(0, 1, -1, 0, height , 0); break;
+                case 7: ctx.transform(0, -1, -1, 0, height , width); break;
+                case 8: ctx.transform(0, -1, 1, 0, 0, width); break;
+                default: ctx.transform(1, 0, 0, 1, 0, 0);
+            }
+
+            ctx.drawImage(img, 0, 0, width, height);
+            _cbProcessImage(canvas.toDataURL("image/jpeg",0.7));
+        }
+    };
+    reader.onerror = _cbProcessError;
+}
+
 export function base64ArrayBuffer(arrayBuffer) {
     var base64    = ''
     var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'

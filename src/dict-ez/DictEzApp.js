@@ -9,8 +9,8 @@ import 'onsenui/css/onsen-css-components.css';
 import OcrPage from './OcrPage.js';
 import TtsPage from './TtsPage.js';
 
-// Stage Constants
-const [STAGE_OCR, STAGE_TTS] = [1, 2];
+// Constant values across the application
+export const [ LANG_NONE, LANG_ZH_HK, LANG_ZH_TW, LANG_EN ] = [ "", "zh-hk", "zh-tw", "en-gb" ];
 
 /**
  * Main Application Page for Dictation EZ
@@ -25,8 +25,21 @@ class DictEzApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: STAGE_OCR
+            ttsContent: ''
         }
+        this.changeToTtsPage = this.changeToTtsPage.bind(this);
+    }
+
+    changeToTtsPage(_textContent) {
+        this.setState({
+            ttsContent: _textContent
+        })
+    }
+
+    resetAll() {
+        this.setState({
+            ttsContent: ''
+        })
     }
 
     /**
@@ -35,10 +48,10 @@ class DictEzApp extends Component {
     render() {
         return(
 <Page id="MainPage">
-{ (this.state.stage === STAGE_OCR) &&
-    <OcrPage></OcrPage>
+{ this.state.ttsContent === '' &&
+    <OcrPage onOcrCompleted={this.changeToTtsPage}></OcrPage>
 }
-{ (this.state.stage === STAGE_TTS) &&
+{ this.state.ttsContent &&
     <TtsPage></TtsPage>
 }
 </Page>

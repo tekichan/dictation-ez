@@ -85,5 +85,13 @@ npm install onsenui --save
 npm install onsenui react-onsenui --save
 ```
 
+## Appendix: axios
+[axios](https://github.com/axios/axios) is a Promise based HTTP client for the browser and node.js.
+
+### Install with NPM
+```Bash
+npm install axios --save
+```
+
 ## Authors
 - Teki Chan *tekichan@gmail.com*
