@@ -84,4 +84,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-src/dict-ez/DictEzApp.js
+/src/dict-ez/config.js
