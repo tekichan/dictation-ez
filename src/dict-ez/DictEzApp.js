@@ -52,7 +52,7 @@ class DictEzApp extends Component {
     <OcrPage onOcrCompleted={this.changeToTtsPage}></OcrPage>
 }
 { this.state.ttsContent &&
-    <TtsPage></TtsPage>
+    <TtsPage ttsContent={this.state.ttsContent}></TtsPage>
 }
 </Page>
         );
