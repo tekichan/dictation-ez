@@ -1,6 +1,10 @@
 import React, { Component}  from 'react';
 import { Page, Toolbar, ToolbarButton, List, ListItem, Range, Row, Col } from 'react-onsenui';
 
+// Webpack CSS import
+import 'onsenui/css/onsenui.css';
+import 'onsenui/css/onsen-css-components.css';
+
 const TOOLBAR_MSG_INIT = '按此播放';
 
 class TtsPage extends Component {
@@ -45,7 +49,7 @@ class TtsPage extends Component {
 
     render() {
         return(
-<Page>
+<Page renderToolbar={() =>
     <Toolbar>
         <div className="center">
 { this.state.toolbar_msg }<i className="zmdi zmdi-play-circle"></i>
@@ -54,9 +58,10 @@ class TtsPage extends Component {
             <ToolbarButton onClick={this.handleReset}><i className="zmdi zmdi-refresh"></i></ToolbarButton>
         </div>
     </Toolbar>
+}>
     <Row>
-        <Col width="20%">
-            <i class="zmdi zmdi-audio"></i>
+        <Col width="20%" verticalAlign="center" style={{ 'text-align': "right" }}>
+            <i class="zmdi zmdi-bike" />Slow
         </Col>
         <Col width="60^">
         <Range modifier="material"
@@ -65,8 +70,8 @@ class TtsPage extends Component {
                 onChange={(event) => this.setState({speechSpeed: parseInt(event.target.value)})}
         />
         </Col>
-        <Col width="20%">
-            <i class="zmdi zmdi-audio"></i>
+        <Col width="20%" verticalAlign="center" style={{ 'text-align': "left" }}>
+            <i class="zmdi zmdi-airplane" />Fast
         </Col>
     </Row>
     <Row><Col>

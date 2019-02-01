@@ -5,6 +5,10 @@ import { getBase64 } from './ImageUtils.js';
 import { callOcrSpace } from './OcrService.js';
 import { OCR_SPACE_API_KEY } from './config.js';
 
+// Webpack CSS import
+import 'onsenui/css/onsenui.css';
+import 'onsenui/css/onsen-css-components.css';
+
 import './OcrPage.css';
 
 const TOOLBAR_SELECT_LANG = '默書易 Dict-Ez：先選擇語言';
@@ -91,7 +95,7 @@ class OcrPage extends Component {
 
     render() {
         return(
-<Page>
+<Page renderToolbar={() => 
     <Toolbar>
         <div className="center">
 { this.state.toolbar_msg }
@@ -100,6 +104,7 @@ class OcrPage extends Component {
             <ToolbarButton onClick={this.handleReset}><i className="zmdi zmdi-refresh"></i></ToolbarButton>
         </div>
     </Toolbar>
+}>
     <Modal isOpen={this.state.isPostingOcr}>
       <p>Loading ...</p>
       <ProgressCircular indeterminate />
