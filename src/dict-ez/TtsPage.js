@@ -1,5 +1,8 @@
 import React, { Component}  from 'react';
 import { Page, Toolbar, ToolbarButton, List, ListItem, Range, Row, Col } from 'react-onsenui';
+import { LANG_NONE, LANG_ZH_HK, LANG_ZH_TW, LANG_EN } from './DictEzApp.js';
+import { VOICE_RSS_API_KEY } from './config.js';
+import { callVoiceRss } from './TtsService.js';
 
 // Webpack CSS import
 import 'onsenui/css/onsenui.css';
@@ -16,16 +19,24 @@ class TtsPage extends Component {
                 toolbar_msg: TOOLBAR_MSG_INIT
                 , ttsContents: this.props.ttsContent.trim().split(/\r?\n/)
                 , speechSpeed: 0
+                , isPostingTts: false
             };
         } else {
             this.state = {
                 toolbar_msg: TOOLBAR_MSG_INIT
                 , ttsContents: []
                 , speechSpeed: 0
+                , isPostingTts: false
             };
         }
 
         this.handleReset = this.handleReset.bind(this);
+        this.handlePlay = this.handlePlay.bind(this);
+
+        this.processTtsContent = this.processTtsContent.bind(this);
+        this.processTtsError = this.processTtsError.bind(this);
+
+        this.playVoice = this.playVoice.bind(this);
     }
 
     resetAll() {
@@ -34,17 +45,84 @@ class TtsPage extends Component {
             this.setState({
                 ttsContents: this.props.ttsContent.trim().split(/\r?\n/)
                 , speechSpeed: 0
+                , isPostingTts: false
             });
         } else {
             this.setState({
                 ttsContents: []
                 , speechSpeed: 0
+                , isPostingTts: false
             });
         }        
     }
 
     handleReset(_event) {
         this.resetAll();
+    }
+
+    handlePlay(_event, _sentence) {
+        if (this.state.isPostingTts) {
+            // Posting to TTS in progress
+            console.log('Posting to TTS in progress rejects a new coming request.');
+            // TODO: show a dialog to prompt a warning messagae
+        } else {
+            this.setState({
+                isPostingTts: true
+            });
+            callVoiceRss(
+                VOICE_RSS_API_KEY
+                , this.props.lang
+                , _sentence
+                , Math.floor(this.state.speechSpeed / 5.0) - 10
+                , this.processTtsContent
+                , this.processTtsError
+            );    
+        }
+    }
+
+    processTtsContent(_response) {
+        if (_response) {
+            if (_response.startsWith("ERROR")) {
+              console.log("Speech can't be played. Please try next time.");
+              // TODO: show a dialog to prompt a warning messagae
+            } else {
+              let playResult = this.playVoice(_response);
+              if (!playResult) {
+                console.log("Speech can't be played. Please try next time.");
+                // TODO: show a dialog to prompt a warning messagae
+              }                
+            }
+          } else {
+            console.log("Speech can't be played. Please try next time.");
+            // TODO: show a dialog to prompt a warning messagae
+          }
+    }
+
+    processTtsError(_error) {
+        this.setState({
+            isPostingTts: false
+        });
+        console.log(_error);
+    }
+
+    playVoice(_voiceContent) {
+        var audio = document.querySelector("#audioPlayback");
+        if (!audio.src || audio.paused || audio.ended) {
+            audio.src = _voiceContent;
+            audio.load();
+            var playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(function() {
+                    console.log("Automatic playback started!");
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            } else {
+                console.log("audio returns undefined.");
+            }            
+        } else {
+            console.log("audio element is not available.");
+        } 
     }
 
     render() {
@@ -75,12 +153,15 @@ class TtsPage extends Component {
         </Col>
     </Row>
     <Row><Col>
+        <audio id="audioPlayback" controls src=""></audio>
+    </Col></Row>
+    <Row><Col>
         <List
             dataSource={ this.state.ttsContents }
             renderRow={(row, idx) => (
                 <ListItem modifier={idx === this.state.ttsContents.length - 1 ? 'longdivider' : null}>
-                <div class="left"><i className="zmdi zmdi-play-circle"></i></div>
-                <div class="center">{row}</div>
+                <div class="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle"></i></div>
+                <div class="center" onClick={(_event) => { this.handlePlay(_event, row); }}>{row}</div>
                 <div class="right"><i className="zmdi zmdi-edit"></i></div>
                 </ListItem>
             )}

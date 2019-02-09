@@ -25,20 +25,23 @@ class DictEzApp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ttsContent: ''
+            lang: LANG_NONE
+            , ttsContent: ''
         }
         this.changeToTtsPage = this.changeToTtsPage.bind(this);
     }
 
-    changeToTtsPage(_textContent) {
+    changeToTtsPage(_lang, _textContent) {
         this.setState({
-            ttsContent: _textContent
+            lang: _lang
+            , ttsContent: _textContent
         })
     }
 
     resetAll() {
         this.setState({
-            ttsContent: ''
+            lang: LANG_NONE
+            , ttsContent: ''
         })
     }
 
@@ -52,7 +55,7 @@ class DictEzApp extends Component {
     <OcrPage onOcrCompleted={this.changeToTtsPage}></OcrPage>
 }
 { this.state.ttsContent &&
-    <TtsPage ttsContent={this.state.ttsContent}></TtsPage>
+    <TtsPage lang={this.state.lang} ttsContent={this.state.ttsContent}></TtsPage>
 }
 </Page>
         );

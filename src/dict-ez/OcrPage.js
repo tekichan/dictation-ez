@@ -63,7 +63,7 @@ class OcrPage extends Component {
         this.setState({
             isPostingOcr: false
         });
-        this.props.onOcrCompleted(completeText); 
+        this.props.onOcrCompleted(this.state.lang, completeText); 
         console.log(completeText);
     }
 
