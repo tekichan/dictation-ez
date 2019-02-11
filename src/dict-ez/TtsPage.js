@@ -81,12 +81,14 @@ class TtsPage extends Component {
     }
 
     processTtsContent(_response) {
-        if (_response) {
-            if (_response.startsWith("ERROR")) {
+        if (typeof _response !== undefined && _response !== null) {
+            var respData = _response.data;
+            if (respData.startsWith("ERROR")) {
               console.log("Speech can't be played. Please try next time.");
+              console.log(respData);
               // TODO: show a dialog to prompt a warning messagae
             } else {
-              let playResult = this.playVoice(_response);
+              let playResult = this.playVoice(respData);
               if (!playResult) {
                 console.log("Speech can't be played. Please try next time.");
                 // TODO: show a dialog to prompt a warning messagae
@@ -119,10 +121,12 @@ class TtsPage extends Component {
                 });
             } else {
                 console.log("audio returns undefined.");
-            }            
+            }
+            return playPromise;            
         } else {
             console.log("audio element is not available.");
-        } 
+        }
+        return null; 
     }
 
     render() {
