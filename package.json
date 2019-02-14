@@ -5,8 +5,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "onsenui": "^2.10.6",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "react-onsenui": "^1.11.2",
     "react-scripts": "2.1.3"
   },

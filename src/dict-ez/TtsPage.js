@@ -1,6 +1,6 @@
 import React, { Component}  from 'react';
 import { Page, Toolbar, ToolbarButton, List, ListItem, Range, Row, Col } from 'react-onsenui';
-import { LANG_NONE, LANG_ZH_HK, LANG_ZH_TW, LANG_EN } from './DictEzApp.js';
+// import { LANG_NONE, LANG_ZH_HK, LANG_ZH_TW, LANG_EN } from './DictEzApp.js';
 import { VOICE_RSS_API_KEY } from './config.js';
 import { callVoiceRss } from './TtsService.js';
 
@@ -9,6 +9,7 @@ import 'onsenui/css/onsenui.css';
 import 'onsenui/css/onsen-css-components.css';
 
 const TOOLBAR_MSG_INIT = '按此播放';
+const DEFAULT_SPEECH_SPEED = 50;
 
 class TtsPage extends Component {
     constructor(props) {
@@ -18,19 +19,20 @@ class TtsPage extends Component {
             this.state = {
                 toolbar_msg: TOOLBAR_MSG_INIT
                 , ttsContents: this.props.ttsContent.trim().split(/\r?\n/)
-                , speechSpeed: 0
+                , speechSpeed: DEFAULT_SPEECH_SPEED
                 , isPostingTts: false
             };
         } else {
             this.state = {
                 toolbar_msg: TOOLBAR_MSG_INIT
                 , ttsContents: []
-                , speechSpeed: 0
+                , speechSpeed: DEFAULT_SPEECH_SPEED
                 , isPostingTts: false
             };
         }
 
         this.handleReset = this.handleReset.bind(this);
+        this.handleBackHome = this.handleBackHome.bind(this);
         this.handlePlay = this.handlePlay.bind(this);
 
         this.processTtsContent = this.processTtsContent.bind(this);
@@ -44,16 +46,21 @@ class TtsPage extends Component {
             // Split Content Text with newline
             this.setState({
                 ttsContents: this.props.ttsContent.trim().split(/\r?\n/)
-                , speechSpeed: 0
+                , speechSpeed: DEFAULT_SPEECH_SPEED
                 , isPostingTts: false
             });
         } else {
             this.setState({
                 ttsContents: []
-                , speechSpeed: 0
+                , speechSpeed: DEFAULT_SPEECH_SPEED
                 , isPostingTts: false
             });
         }        
+    }
+
+    handleBackHome(_event) {
+        this.resetAll();
+        this.props.onBackToHome();
     }
 
     handleReset(_event) {
@@ -94,10 +101,13 @@ class TtsPage extends Component {
                 // TODO: show a dialog to prompt a warning messagae
               }                
             }
-          } else {
+        } else {
             console.log("Speech can't be played. Please try next time.");
             // TODO: show a dialog to prompt a warning messagae
-          }
+        }
+        this.setState({
+            isPostingTts: false
+        });        
     }
 
     processTtsError(_error) {
@@ -133,6 +143,9 @@ class TtsPage extends Component {
         return(
 <Page renderToolbar={() =>
     <Toolbar>
+        <div className="left">
+            <ToolbarButton onClick={this.handleBackHome}><i className="zmdi zmdi-home"></i></ToolbarButton>
+        </div>        
         <div className="center">
 { this.state.toolbar_msg }<i className="zmdi zmdi-play-circle"></i>
         </div>
@@ -142,8 +155,8 @@ class TtsPage extends Component {
     </Toolbar>
 }>
     <Row>
-        <Col width="20%" verticalAlign="center" style={{ 'text-align': "right" }}>
-            <i class="zmdi zmdi-bike" />Slow
+        <Col width="20%" verticalAlign="center" style={{ 'textAlign': "right" }}>
+            <i className="zmdi zmdi-bike" />Slow
         </Col>
         <Col width="60^">
         <Range modifier="material"
@@ -152,8 +165,8 @@ class TtsPage extends Component {
                 onChange={(event) => this.setState({speechSpeed: parseInt(event.target.value)})}
         />
         </Col>
-        <Col width="20%" verticalAlign="center" style={{ 'text-align': "left" }}>
-            <i class="zmdi zmdi-airplane" />Fast
+        <Col width="20%" verticalAlign="center" style={{ 'textAlign': "left" }}>
+            <i className="zmdi zmdi-airplane" />Fast
         </Col>
     </Row>
     <Row><Col>
@@ -163,10 +176,10 @@ class TtsPage extends Component {
         <List
             dataSource={ this.state.ttsContents }
             renderRow={(row, idx) => (
-                <ListItem modifier={idx === this.state.ttsContents.length - 1 ? 'longdivider' : null}>
-                <div class="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle"></i></div>
-                <div class="center" onClick={(_event) => { this.handlePlay(_event, row); }}>{row}</div>
-                <div class="right"><i className="zmdi zmdi-edit"></i></div>
+                <ListItem key={"contentItem-" + idx} modifier={idx === this.state.ttsContents.length - 1 ? 'longdivider' : null}>
+                <div className="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle"></i></div>
+                <div className="center" onClick={(_event) => { this.handlePlay(_event, row); }}>{row}</div>
+                <div className="right"><i className="zmdi zmdi-edit"></i></div>
                 </ListItem>
             )}
         />

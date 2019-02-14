@@ -28,7 +28,9 @@ class DictEzApp extends Component {
             lang: LANG_NONE
             , ttsContent: ''
         }
+        this.resetAll = this.resetAll.bind(this);
         this.changeToTtsPage = this.changeToTtsPage.bind(this);
+        this.backToOcrPage = this.backToOcrPage.bind(this);
     }
 
     changeToTtsPage(_lang, _textContent) {
@@ -36,6 +38,10 @@ class DictEzApp extends Component {
             lang: _lang
             , ttsContent: _textContent
         })
+    }
+
+    backToOcrPage() {
+        this.resetAll();
     }
 
     resetAll() {
@@ -55,7 +61,7 @@ class DictEzApp extends Component {
     <OcrPage onOcrCompleted={this.changeToTtsPage}></OcrPage>
 }
 { this.state.ttsContent &&
-    <TtsPage lang={this.state.lang} ttsContent={this.state.ttsContent}></TtsPage>
+    <TtsPage lang={this.state.lang} ttsContent={this.state.ttsContent} onBackToHome={this.backToOcrPage}></TtsPage>
 }
 </Page>
         );
