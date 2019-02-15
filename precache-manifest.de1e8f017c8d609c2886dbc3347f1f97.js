@@ -100,19 +100,19 @@ self.__precacheManifest = [
     "url": "/dictation-ez/static/media/ionicons.aff28a20.svg"
   },
   {
-    "revision": "de1d242d8acb26ec43c0d071fe78e72d",
-    "url": "/dictation-ez/static/media/fa-solid-900.de1d242d.svg"
-  },
-  {
     "revision": "83e6c29fb363b2f0ea6cc18fefff729c",
     "url": "/dictation-ez/static/media/fa-brands-400.83e6c29f.svg"
+  },
+  {
+    "revision": "de1d242d8acb26ec43c0d071fe78e72d",
+    "url": "/dictation-ez/static/media/fa-solid-900.de1d242d.svg"
   },
   {
     "revision": "14222a56f8a8e7a98c4c",
     "url": "/dictation-ez/static/css/1.a912700c.chunk.css"
   },
   {
-    "revision": "3bd9c2f83a858dd25d52d502d0af64eb",
+    "revision": "2b0c306e6a6672835738f64b02f3ef09",
     "url": "/dictation-ez/index.html"
   }
 ];
