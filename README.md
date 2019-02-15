@@ -5,11 +5,11 @@
 ## Introduction
 This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content.
 
-## Appendix: Get started with Create React App
+## Appendix A: Get started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -46,7 +46,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+### Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
@@ -76,7 +76,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
 
-## Appendix: Onesen UI
+## Appendix B: Onesen UI
 [Onsen UI](https://onsen.io/)
 
 ### Install with NPM
@@ -85,13 +85,30 @@ npm install onsenui --save
 npm install onsenui react-onsenui --save
 ```
 
-## Appendix: axios
+## Appendix C: axios
 [axios](https://github.com/axios/axios) is a Promise based HTTP client for the browser and node.js.
 
 ### Install with NPM
 ```Bash
 npm install axios --save
 ```
+
+## Appendix D: gh-pages
+[gh-pages](https://www.npmjs.com/package/gh-pages) is a tool to publish Web App build to a gh-pages branch on GitHub.
+
+### Step 1: Installation
+```Bash
+npm install gh-pages --save-dev
+```
+
+### Step 2: Define
+Modify package.json and input "homepage", "predeploy" and "deploy" under "scripts" section.
+
+### Step 3: Run
+```Bash
+npm run deploy
+```
+
 
 ## Authors
 - Teki Chan *tekichan@gmail.com*
