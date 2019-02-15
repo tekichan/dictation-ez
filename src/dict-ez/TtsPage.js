@@ -1,5 +1,5 @@
 import React, { Component}  from 'react';
-import { Page, Toolbar, ToolbarButton, List, ListItem, Range, Row, Col } from 'react-onsenui';
+import { Page, Toolbar, ToolbarButton, List, ListItem, Range, Row, Col, Input } from 'react-onsenui';
 // import { LANG_NONE, LANG_ZH_HK, LANG_ZH_TW, LANG_EN } from './DictEzApp.js';
 import { VOICE_RSS_API_KEY } from './config.js';
 import { callVoiceRss } from './TtsService.js';
@@ -10,6 +10,9 @@ import 'onsenui/css/onsen-css-components.css';
 
 const TOOLBAR_MSG_INIT = '按此播放';
 const DEFAULT_SPEECH_SPEED = 50;
+const VOICE_BYTE_LIMIT = 90000;
+
+const countBytes = (str) => encodeURI(str).split(/%..|./).length - 1;
 
 class TtsPage extends Component {
     constructor(props) {
@@ -34,6 +37,9 @@ class TtsPage extends Component {
         this.handleReset = this.handleReset.bind(this);
         this.handleBackHome = this.handleBackHome.bind(this);
         this.handlePlay = this.handlePlay.bind(this);
+        this.handlePlayAll = this.handlePlayAll.bind(this);
+        this.handleUpdateItem = this.handleUpdateItem.bind(this);
+        this.handleMoveItem = this.handleMoveItem.bind(this);
 
         this.processTtsContent = this.processTtsContent.bind(this);
         this.processTtsError = this.processTtsError.bind(this);
@@ -84,6 +90,87 @@ class TtsPage extends Component {
                 , this.processTtsContent
                 , this.processTtsError
             );    
+        }
+    }
+
+    handlePlayAll(_event) {
+        this.playFromArray(this.state.ttsContents);
+    }
+
+    playFromArray(arrContents) {
+        var voiceContent = "";
+        if (typeof arrContents !== undefined && arrContents !== null && arrContents.length > 0) {
+            while (arrContents.length > 0 &&
+                    countBytes(voiceContent + "\n" + arrContents[0]) <= VOICE_BYTE_LIMIT) {
+              voiceContent += "\n" + arrContents.shift();
+            }
+        }
+        if (voiceContent.trim() !== "") {
+            callVoiceRss(
+                VOICE_RSS_API_KEY
+                , this.props.lang
+                , voiceContent
+                , Math.floor(this.state.speechSpeed / 5.0) - 10
+                , (_response) => {
+                    if (typeof _response !== undefined && _response !== null) {
+                        var respData = _response.data;
+                        if (respData.startsWith("ERROR")) {
+                          console.log("Speech can't be played. Please try next time.");
+                          console.log(respData);
+                        } else {
+                          let playResult = this.playVoice(respData);
+                          if (!playResult) {
+                            console.log("Speech can't be played. Please try next time.");
+                          } else {
+                              this.playFromArray(arrContents);
+                          }
+                        }
+                    } else {
+                        console.log("Speech can't be played. Please try next time.");
+                    }
+                }
+                , (_error) => {
+                    console.log(_error);
+                }
+            ); 
+        }
+    }
+
+    handleUpdateItem(_event, _idx) {
+        this.setState(prevState => {
+            const arrContent = prevState.ttsContents.map((item, idx) => {
+                if (idx === _idx) {
+                    return _event.target.value;
+                } else {
+                    return item;
+                }
+            });
+            return {
+                ttsContents: arrContent
+            };
+        });
+    }
+
+    handleMoveItem(_event, _idx, _step) {
+        if (_idx + _step < 0 || _idx + _step >= this.state.ttsContents.length) {
+            return; // Invalid movement
+        } else {
+            var thisValue = this.state.ttsContents[_idx];
+            var nextValue = this.state.ttsContents[_idx + _step];
+            this.setState(prevState => {
+                const arrContent = prevState.ttsContents.map((item, idx) => {
+                    if (idx === _idx) {
+                        return nextValue;
+                    } else if (idx === (_idx + _step)) {
+                        return thisValue;
+                    } else {
+                        return item;
+                    }
+                });
+                return {
+                    ttsContents: arrContent
+                };
+            });            
         }
     }
 
@@ -146,7 +233,7 @@ class TtsPage extends Component {
         <div className="left">
             <ToolbarButton onClick={this.handleBackHome}><i className="zmdi zmdi-home"></i></ToolbarButton>
         </div>        
-        <div className="center">
+        <div className="center" onClick={this.handlePlayAll}>
 { this.state.toolbar_msg }<i className="zmdi zmdi-play-circle"></i>
         </div>
         <div className="right">
@@ -177,9 +264,15 @@ class TtsPage extends Component {
             dataSource={ this.state.ttsContents }
             renderRow={(row, idx) => (
                 <ListItem key={"contentItem-" + idx} modifier={idx === this.state.ttsContents.length - 1 ? 'longdivider' : null}>
-                <div className="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle"></i></div>
-                <div className="center" onClick={(_event) => { this.handlePlay(_event, row); }}>{row}</div>
-                <div className="right"><i className="zmdi zmdi-edit"></i></div>
+                <div className="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle" style={{"fontSize": "1.5em"}}></i></div>
+                <div className="center">
+                    <Input type="text" modifier='transparent' style={{ 'width': "100%" }} value={row} onChange={(_event) => this.handleUpdateItem(_event, idx)} float></Input>
+                </div>
+                <div className="right">
+                    <i className="zmdi zmdi-caret-up-circle" style={{"fontSize": "1.5em"}} onClick={(_event) => {this.handleMoveItem(_event, idx, -1)}}></i>
+                    &nbsp;
+                    <i className="zmdi zmdi-caret-down-circle" style={{"fontSize": "1.5em"}} onClick={(_event) => {this.handleMoveItem(_event, idx, 1)}}></i>
+                </div>
                 </ListItem>
             )}
         />
