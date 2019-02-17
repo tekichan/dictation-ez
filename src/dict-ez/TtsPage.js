@@ -264,7 +264,9 @@ class TtsPage extends Component {
             dataSource={ this.state.ttsContents }
             renderRow={(row, idx) => (
                 <ListItem key={"contentItem-" + idx} modifier={idx === this.state.ttsContents.length - 1 ? 'longdivider' : null}>
-                <div className="left" onClick={(_event) => { this.handlePlay(_event, row); }}><i className="zmdi zmdi-play-circle" style={{"fontSize": "1.5em"}}></i></div>
+                <div className="left" onClick={(_event) => { this.handlePlay(_event, row); }}>
+                    <i className="zmdi zmdi-play-circle" style={{"fontSize": "1.5em"}}></i>
+                </div>
                 <div className="center">
                     <Input type="text" modifier='transparent' style={{ 'width': "100%" }} value={row} onChange={(_event) => this.handleUpdateItem(_event, idx)} float></Input>
                 </div>

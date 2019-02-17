@@ -138,7 +138,7 @@ class OcrPage extends Component {
     </div>
     <BottomToolbar modifier="material">
         <Segment style={{width: '100%'}} modifier="material">
-            <ToolbarButton 
+            <ToolbarButton
                 onClick={
                     (_event) => {this.hangleLangBtnClick(LANG_ZH_HK, _event)}
                 }

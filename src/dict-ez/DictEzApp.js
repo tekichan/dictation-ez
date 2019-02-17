@@ -1,10 +1,6 @@
 import React, { Component}  from 'react';
 import { Page } from 'react-onsenui';
 
-// Webpack CSS import
-import 'onsenui/css/onsenui.css';
-import 'onsenui/css/onsen-css-components.css';
-
 // Application Page components
 import OcrPage from './OcrPage.js';
 import TtsPage from './TtsPage.js';
