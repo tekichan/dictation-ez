@@ -3,7 +3,29 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](/doc/LICENSE) 
 
 ## Introduction
-This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content.
+This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content. This app makes use of [React JS](https://reactjs.org/) plus Onsen UI as frontend frameworks. I referenced Material Design as visual principle.
+
+The app has been published to Github Pages at https://tekichan.github.io/dictation-ez/. The app is responsive, so it can be properly opened with a desktop web browser or a mobile web browser.
+
+## Prerequisites
+1. Register a TTS Service. Here we use a free service provided by [Voice RSS](http://www.voicerss.org/)
+2. Register a OCR Service. Here we use a free service provided by [OCR Space](https://ocr.space/)
+3. Install [NodeJS](https://nodejs.org) with [NPM](https://www.npmjs.com/)
+4. Install [Create React App](https://github.com/facebook/create-react-app)
+5. Install [Onsen UI](https://onsen.io/)
+6. Install [axios](https://github.com/axios/axios)
+7. Install [gh-pages](https://www.npmjs.com/package/gh-pages) for deploying a production build to [Github Pages](https://pages.github.com/)
+8. Select a color theme in [Material Design Color Tool](https://material.io/tools/color/)
+9. Generate a CSS set for Onsen UI theme in [Onsen UI Theme Roller](https://onsen.io/theme-roller)
+
+## Getting Started
+### High Level Design
+![High Level Design](/doc/dictez_highleveldesign.png)
+
+The app runs with App.js which is a default entry point of React JS app. It uses DictEzApp tag to define the container of the main contents, which are OCR Page and TTS Page. DictEzApp shows OCR Page as the home page. OCR Page uses ImageUtils to convert an uploaded or camera captured Image file into a binary array in BASE64 format for OcrService to convert the image to text. After OCR process DictEzApp will redirect to TTS Page and show the converted text. When the text is clicked, TTS Page will use TtsService to convert the text to a voice data in BASE64 format. Then the voice can be played in the page. DictEzApp will return OCR Page when a home button is pressed.
+
+### Build App Skeleton
+The next step is to create the app folder and essential components according to the high level design.
 
 ## Appendix A: Get started with Create React App
 
