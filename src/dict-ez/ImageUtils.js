@@ -1,11 +1,21 @@
+/**
+ * Process and display Base 64 code from the given Image file
+ * @param {*} file              Binary of Image file
+ * @param {*} _cbProcessImage   Call back function after processing the Image file
+ * @param {*} _cbProcessError   Call back function after an error happens during the process
+ */
 export function getBase64(file, _cbProcessImage, _cbProcessError) {
     var reader = new FileReader();
-    reader.readAsArrayBuffer(file);
+    reader.readAsArrayBuffer(file);     // Read the file into binary buffer
+
+    // Define the function routine when loading the file
     reader.onload = function () {
         var srcOrientation = getOrientation(reader.result);
         var base64 = 'data:image/jpg;base64,' + base64ArrayBuffer(reader.result);
         var img = new Image();
         img.setAttribute("src", base64);
+
+        // Define the function routine when loading the image
         img.onload = function() {
             var width = 800;
             var height = Math.floor(img.height * (width / img.width));
@@ -35,13 +45,20 @@ export function getBase64(file, _cbProcessImage, _cbProcessError) {
                 default: ctx.transform(1, 0, 0, 1, 0, 0);
             }
 
+            // Draw the canvas context
             ctx.drawImage(img, 0, 0, width, height);
+            // Go to the call back function with the resulted Base64 code of the image
             _cbProcessImage(canvas.toDataURL("image/jpeg",0.7));
         }
     };
+    // Define the error function routine with the call back function routine of the error handler
     reader.onerror = _cbProcessError;
 }
 
+/**
+ * Generate Base 64 code by reading the binary buffer
+ * @param {*} arrayBuffer 
+ */
 export function base64ArrayBuffer(arrayBuffer) {
     var base64    = ''
     var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
@@ -93,7 +110,11 @@ export function base64ArrayBuffer(arrayBuffer) {
 
     return base64
 }
-  
+
+/**
+ * Get the image orientation
+ * @param {*} buffer    Binary buffer of the image
+ */
 export function getOrientation(buffer) {
     var view = new DataView(buffer);
     if (view.getUint16(0, false) != 0xFFD8) return -2;

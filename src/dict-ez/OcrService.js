@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+/**
+ * Call OCR Service Endpoint
+ * <p>
+ * Ref: https://ocr.space/
+ * @param {*} _ocrApiKey        OCR Space API Key
+ * @param {*} _lang             Language Selected
+ * @param {*} _base64Image      Base 64 Code of Image
+ * @param {*} _cbProcessResp    Call back function when processing Response object
+ * @param {*} _cbProcessError   Call back function when an error happens during the process
+ */
 export function callOcrSpace(_ocrApiKey, _lang, _base64Image, _cbProcessResp, _cbProcessError) {
     const urlOcrApi = "https://api.ocr.space/parse/image";
     var formData = new FormData();
@@ -20,6 +30,10 @@ export function callOcrSpace(_ocrApiKey, _lang, _base64Image, _cbProcessResp, _c
     })
 }
 
+/**
+ * Get OCR Space Language Code 
+ * @param {*} _locale   Locale Code used in this app
+ */
 export const getOcrLang = (_locale) => {
     if (_locale) {
         if (_locale.startsWith('zh')) {

@@ -29,6 +29,11 @@ class DictEzApp extends Component {
         this.backToOcrPage = this.backToOcrPage.bind(this);
     }
 
+    /**
+     * Call this method when changing to TTS Page
+     * @param {*} _lang     Selected Language
+     * @param {*} _textContent  Text Content parsed by OCR
+     */
     changeToTtsPage(_lang, _textContent) {
         this.setState({
             lang: _lang
@@ -36,10 +41,16 @@ class DictEzApp extends Component {
         })
     }
 
+    /**
+     * Call this method when going back to OCR Page (the first page)
+     */
     backToOcrPage() {
         this.resetAll();
     }
 
+    /**
+     * Reset all state values to the default ones
+     */
     resetAll() {
         this.setState({
             lang: LANG_NONE
@@ -64,4 +75,5 @@ class DictEzApp extends Component {
     }
 }
 
+// Default exported component
 export default DictEzApp;
