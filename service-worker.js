@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/dictation-ez/precache-manifest.de1e8f017c8d609c2886dbc3347f1f97.js"
+  "/dictation-ez/precache-manifest.e7a227e52c7c6df98f45387372bc61fb.js"
 );
 
 workbox.clientsClaim();

@@ -4,20 +4,20 @@ self.__precacheManifest = [
     "url": "/dictation-ez/static/media/fa-brands-400.da408238.woff"
   },
   {
-    "revision": "9c9521f840862091f8a2",
-    "url": "/dictation-ez/static/css/main.ac416616.chunk.css"
+    "revision": "9857f58f72c0ee434c9b",
+    "url": "/dictation-ez/static/css/main.202a7c49.chunk.css"
+  },
+  {
+    "revision": "e245d01ce8557354b76a",
+    "url": "/dictation-ez/static/js/runtime~main.e245d01c.js"
   },
   {
     "revision": "b71bf1fedb9bddad20afb620872eb2f6",
     "url": "/dictation-ez/static/media/education_bg.b71bf1fe.jpg"
   },
   {
-    "revision": "14222a56f8a8e7a98c4c",
-    "url": "/dictation-ez/static/js/1.14222a56.chunk.js"
-  },
-  {
-    "revision": "190183650b8b6b794209",
-    "url": "/dictation-ez/static/js/runtime~main.19018365.js"
+    "revision": "0032a46c63eadbf1179b",
+    "url": "/dictation-ez/static/js/2.0032a46c.chunk.js"
   },
   {
     "revision": "8d9ab84bfe87a3f77112a6698cf639fb",
@@ -56,8 +56,8 @@ self.__precacheManifest = [
     "url": "/dictation-ez/static/media/ionicons.2c159d0d.woff"
   },
   {
-    "revision": "9c9521f840862091f8a2",
-    "url": "/dictation-ez/static/js/main.9c9521f8.chunk.js"
+    "revision": "9857f58f72c0ee434c9b",
+    "url": "/dictation-ez/static/js/main.9857f58f.chunk.js"
   },
   {
     "revision": "2d0415fa29ea596b7a02c78eddeede20",
@@ -108,11 +108,11 @@ self.__precacheManifest = [
     "url": "/dictation-ez/static/media/fa-solid-900.de1d242d.svg"
   },
   {
-    "revision": "14222a56f8a8e7a98c4c",
-    "url": "/dictation-ez/static/css/1.a912700c.chunk.css"
+    "revision": "0032a46c63eadbf1179b",
+    "url": "/dictation-ez/static/css/2.6996abc9.chunk.css"
   },
   {
-    "revision": "2b0c306e6a6672835738f64b02f3ef09",
+    "revision": "9c2f6c6ec67d2550e3e493bb38f1946d",
     "url": "/dictation-ez/index.html"
   }
 ];
