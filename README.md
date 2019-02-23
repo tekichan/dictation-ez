@@ -1,9 +1,9 @@
 # Dictation Easy (dictation-ez)
 ### Dictation Easy. This app helps students do dictation on their own. 
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](/doc/LICENSE) 
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](/LICENSE) 
 
 ## Introduction
-This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content. This app makes use of [React JS](https://reactjs.org/) plus Onsen UI as frontend frameworks. I referenced Material Design as visual principle.
+This is an app to assist students to do revision for dictation. The app takes a picture of dictation content and converts it to text. Then you can select to read the text content. This app makes use of [React JS](https://reactjs.org/) plus Onsen UI as frontend libraries. I referenced Material Design as visual principle.
 
 The app has been published to Github Pages at https://tekichan.github.io/dictation-ez/. The app is responsive, so it can be properly opened with a desktop web browser or a mobile web browser.
 
@@ -26,6 +26,37 @@ The app runs with App.js which is a default entry point of React JS app. It uses
 
 ### Build App Skeleton
 The next step is to create the app folder and essential components according to the high level design.
+
+1. Run `npx create-react-app dictation-ez` to create an app folder for React JS. The fundamental components and configurations have been in place. A Hello-World style app is available. You can run `npm start` to run the app in your local machine and navigate it at `http://localhost:3000/`.
+2. Run `cd dictation-ez` to access the app folder. 
+3. Install Onsen UI with `npm install onsenui react-onsenui --save` for beautiful UI components.
+4. Install axios with `npm install axios --save`.
+5. Install gh-pages with `npm install gh-pages --save-dev` for Github Pages deployment.
+6. Copy css files which are made in Onsen UI Theme Roller to the folder `src/onsenui/css` for the whole app to use.
+7. Copy the app's background image to the folder `src/images`.
+8. Modify the webpage title in `public/index.html`.
+9. Create components under the folder `src/dict-ez`:
+- `DictEzApp.js` is the core component to control the data flow.
+- `OcrPagejs` is the page component to provide Image Upload and Image to Text functions.
+- `OcrPage.css` is the style sheet specific for `OcrPage.js`.
+- `TtsPage.js` is the page component to display converted text and play voice of the text.
+- `ImageUtils.js` includes the utility functions to provide image files.
+- `OcrService.js` is the service component to call OCR API Service.
+- `TtsService.js` is the service component to call TTS API Service.
+- `config.js` is the configuration file. It contains API keys of the services.
+10. After the React JS components are created, modify `App.js` to show `DictEzApp` in render() function to refer DictEzApp component.
+```Javascript
+    return (
+<DictEzApp></DictEzApp>
+    );
+  }
+```
+11. Run `npm start` for a local development server. Preview the app in the serve. Fine tune codes and logics.
+12. Build the app for production deployment and deploy it to Github Pages.
+```Shell
+npm run deploy
+```
+
 
 ## Appendix A: Get started with Create React App
 

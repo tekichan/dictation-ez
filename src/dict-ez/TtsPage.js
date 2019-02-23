@@ -138,7 +138,7 @@ class TtsPage extends Component {
      * @param {*} _event    Event of this handler
      */
     handlePlayAll(_event) {
-        this.playFromArray(this.state.ttsContents);
+        this.playFromArray(this.state.ttsContents.slice());
     }
 
     /**
@@ -232,6 +232,7 @@ class TtsPage extends Component {
      */
     handleMoveItem(_event, _idx, _step) {
         if (_idx + _step < 0 || _idx + _step >= this.state.ttsContents.length) {
+            console.log("Invalid Movement.");
             return; // Invalid movement
         } else {
             var thisValue = this.state.ttsContents[_idx];
