@@ -7,6 +7,8 @@ This is an app to assist students to do revision for dictation. The app takes a 
 
 The app has been published to Github Pages at https://tekichan.github.io/dictation-ez/. The app is responsive, so it can be properly opened with a desktop web browser or a mobile web browser.
 
+![Dict EZ Demo](/doc/dictez_demo.gif)
+
 ## Prerequisites
 1. Register a TTS Service. Here we use a free service provided by [Voice RSS](http://www.voicerss.org/)
 2. Register a OCR Service. Here we use a free service provided by [OCR Space](https://ocr.space/)
@@ -162,6 +164,15 @@ Modify package.json and input "homepage", "predeploy" and "deploy" under "script
 npm run deploy
 ```
 
+## Appendix E: Constraints
+- 25,000 OCR requests per month
+- OCR image size less than 1MB
+- 350 TTS requests per day
+- TTS text size less than 100KB per request
+
+## Change History
+- 18 Mar 2020 : Packages updated
+- 23 Feb 2020 : First Release
 
 ## Authors
 - Teki Chan *tekichan@gmail.com*
